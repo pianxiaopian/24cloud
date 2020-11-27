@@ -1,0 +1,30 @@
+server:
+  port: 38090
+spring:
+  profiles:
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: twenty-four-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        ###配置中心连接地址
+        server-addr: localhost:8848
+        ###分组
+        group: TWENTY_GROUP
+        ###类型
+        file-extension: yaml
+#开启acutor端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      #打开端点详情
+      show-details: always
