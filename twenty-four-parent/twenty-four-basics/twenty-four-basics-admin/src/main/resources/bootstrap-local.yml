@@ -1,0 +1,25 @@
+server:
+  port: 30101
+spring:
+  profiles:
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: twenty-four-admin
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        register-enabled: false
+      config:
+        ###配置中心连接地址
+        server-addr: localhost:8848
+        ###分组
+        group: TWENTY_GROUP
+        ###类型
+        file-extension: yaml
+  security:
+    user:
+      name: admin
+      password: admin
