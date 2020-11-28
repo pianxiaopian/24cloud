@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>twenty-four-demo-api</module>
+    <module>twenty-four-oss-api</module>
   </modules>
 
   <dependencies>
@@ -64,6 +65,7 @@
       <artifactId>twenty-four-common-core</artifactId>
       <version>${twenty.four.version}</version>
     </dependency>
+
   </dependencies>
 
 </project>
