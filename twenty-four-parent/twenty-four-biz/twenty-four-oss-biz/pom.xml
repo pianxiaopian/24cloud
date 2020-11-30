@@ -3,28 +3,25 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>twenty-four-parent</artifactId>
+    <artifactId>twenty-four-biz</artifactId>
     <groupId>com.twenty.four</groupId>
     <version>1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>twenty-four-common</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-    <module>twenty-four-common-redis</module>
-    <module>twenty-four-common-core</module>
-  </modules>
+  <artifactId>twenty-four-oss-biz</artifactId>
 
   <dependencies>
-    <!-- fastjson -->
     <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
+      <groupId>com.twenty.four</groupId>
+      <artifactId>twenty-four-oss-api</artifactId>
+      <version>${twenty.four.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>com.twenty.four</groupId>
+      <artifactId>twenty-four-common-redis</artifactId>
+      <version>${twenty.four.version}</version>
     </dependency>
   </dependencies>
+
 </project>

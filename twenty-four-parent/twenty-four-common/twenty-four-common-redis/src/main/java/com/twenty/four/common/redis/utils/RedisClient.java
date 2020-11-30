@@ -1,4 +1,4 @@
-package twenty.four.common.redis.utils;
+package com.twenty.four.common.redis.utils;
 
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;

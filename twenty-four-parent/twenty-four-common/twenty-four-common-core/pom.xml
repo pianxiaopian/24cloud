@@ -10,6 +10,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>twenty-four-common-core</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+    </dependency>
+  </dependencies>
 
 
 </project>

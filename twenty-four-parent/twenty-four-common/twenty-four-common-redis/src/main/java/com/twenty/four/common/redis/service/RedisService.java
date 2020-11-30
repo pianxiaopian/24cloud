@@ -1,4 +1,4 @@
-package twenty.four.common.redis.service;
+package com.twenty.four.common.redis.service;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author ruoyi
  **/
-@SuppressWarnings(value = { "unchecked", "rawtypes" })
+//@SuppressWarnings(value = { "unchecked", "rawtypes" })
 @Component
 public class RedisService
 {

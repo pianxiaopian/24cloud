@@ -1,6 +1,15 @@
 package com.twenty.four.oss.domain;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
+import lombok.Data;
 
 /**
  * @description: 用户表映射类
@@ -50,4 +59,49 @@ public class UserInfoDO {
     @ApiModelProperty(value = "用户状态")
     @TableField(value = "state")
     private String state;
+
+    /**
+     * 删除标志：0.false,1.true
+     */
+    @ApiModelProperty(value = "删除标志")
+    @TableField(value = "delete_flag")
+    private String deleteFlag;
+
+    /**
+     * 注册类型： 0.手机号，1.邮箱，2.qq，3.微信
+     */
+    @ApiModelProperty(value = "注册类型")
+    @TableField(value = "register_type")
+    private String registerType;
+
+    /**
+     * 联合登录id
+     */
+    @ApiModelProperty(value = "联合登录id")
+    @TableField(value = "union_login_id")
+    private String unionLoginId;
+
+    /**
+     * 注册时间
+     */
+    @ApiModelProperty(value = "注册时间")
+    @TableField(value = "create_time")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    /**
+     * 邮箱
+     */
+    @ApiModelProperty(value = "邮箱")
+    @TableField(value = "email")
+    private String email;
+
+    /**
+     * 手机号
+     */
+    @ApiModelProperty(value = "手机号")
+    @TableField(value = "mobile")
+    private String mobile;
+
+
 }

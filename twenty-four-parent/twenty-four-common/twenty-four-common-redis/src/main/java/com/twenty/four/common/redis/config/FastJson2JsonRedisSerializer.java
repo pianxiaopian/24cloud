@@ -1,4 +1,4 @@
-package twenty.four.common.redis.config;
+package com.twenty.four.common.redis.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
