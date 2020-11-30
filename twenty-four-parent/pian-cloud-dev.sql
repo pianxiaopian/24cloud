@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 20/11/2020 18:10:20
+ Date: 30/11/2020 18:05:34
 */
 
 SET NAMES utf8mb4;
@@ -73,15 +73,34 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
-  `uuid` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户名',
+  `uuid` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户id',
+  `user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `password` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录密码',
   `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户真实姓名',
   `id_card_num` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户身份证号',
   `state` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '用户状态：0:正常状态,1：用户被锁定',
+  `delete_flag` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '删除标志：0.false,1.true',
+  `register_type` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '注册类型：0.手机号，1.邮箱，2.qq，3.微信',
+  `union_login_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '联合登录表主键',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '注册时间',
+  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `mobile` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
   PRIMARY KEY (`uuid`) USING BTREE,
   UNIQUE INDEX `username`(`user_name`) USING BTREE,
   UNIQUE INDEX `id_card_num`(`id_card_num`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for user_register_strategy
+-- ----------------------------
+DROP TABLE IF EXISTS `user_register_strategy`;
+CREATE TABLE `user_register_strategy`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '表主键',
+  `strategy_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '服务名称',
+  `strategy_bean_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL COMMENT '服务执行id beanid',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `bean_id`(`strategy_bean_id`) USING BTREE,
+  UNIQUE INDEX `strategy_name`(`strategy_name`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
