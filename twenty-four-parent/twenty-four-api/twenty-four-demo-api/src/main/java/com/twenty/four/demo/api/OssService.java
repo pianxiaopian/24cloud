@@ -9,6 +9,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @description: 单点登录接口服务
@@ -31,4 +32,10 @@ public interface OssService {
      */
     @PostMapping("/save")
     Result save(@RequestBody @Valid UserInfoVO userInfoVO) throws Exception;
+
+    /**
+     * 保存用户信息
+     */
+    @PostMapping("/search")
+    Result<List<UserInfoRespDTO>> search(@RequestParam(required = false) String searchKey);
 }

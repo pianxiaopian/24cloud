@@ -63,4 +63,13 @@ public class OssServiceImpl extends ServiceImpl<OssServiceMapper, UserInfoDO> im
         }
         return Result.fail();
     }
+
+    @Override
+    public Result<List<UserInfoRespDTO>> search(String searchKey) {
+        List<UserInfoRespDTO> userInfoRespDTOS = baseMapper.searchUserInfo(searchKey);
+        if(userInfoRespDTOS == null || userInfoRespDTOS.size() == SwingConstants.CENTER){
+            return Result.fail(ResultCode.NOT_QUERIED);
+        }
+        return Result.ok(userInfoRespDTOS);
+    }
 }

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.twenty.four.demo.domain.UserInfoDO;
 import com.twenty.four.demo.model.dto.UserInfoRespDTO;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 
@@ -17,4 +19,10 @@ public interface OssServiceMapper extends BaseMapper<UserInfoDO> {
 
     @Select("select u.uuid,u.user_name,u.name,u.id_card_num from user_info u where u.state = '0'")
     List<UserInfoRespDTO> selectUserInfo();
+
+    @Select("select u.uuid,u.user_name,u.name,u.id_card_num from user_info u " +
+            "where u.state = '0' " +
+            "and (u.name like CONCAT('%', #{searchKey}, '%') " +
+            "or u.id_card_num like CONCAT('%', #{searchKey}, '%')) ")
+    List<UserInfoRespDTO> searchUserInfo(@Param("searchKey") String searchKey);
 }
