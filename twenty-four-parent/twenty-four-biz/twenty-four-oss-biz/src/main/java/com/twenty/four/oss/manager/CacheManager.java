@@ -22,7 +22,7 @@ public class CacheManager {
     @Autowired
     private RedisService redisServiceUtils;
 
-    @Cacheable(value = "twenty-four-oss-getStrategyId", key = "'getStrategyId'+'_'+#beanId", unless = "#result != null")
+    @Cacheable(value = "twenty-four-oss-getStrategyId", key = "'getStrategyId'+'_'+#beanId", unless = "#registerStrategy == null")
     public RegisterStrategy getStrategyId(String beanId){
         RegisterStrategy registerStrategy = null;
         try{
