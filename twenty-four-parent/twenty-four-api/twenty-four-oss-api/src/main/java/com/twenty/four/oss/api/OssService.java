@@ -2,6 +2,7 @@ package com.twenty.four.oss.api;
 
 import com.twenty.four.common.core.result.Result;
 import com.twenty.four.oss.model.vo.CodeVO;
+import com.twenty.four.oss.model.vo.TokenVO;
 import com.twenty.four.oss.model.vo.UserRegisterVO;
 import io.swagger.annotations.Api;
 import javax.validation.Valid;
@@ -29,4 +30,6 @@ public interface OssService {
     @PostMapping("getRegisterCode")
     Result getRegisterCode(@RequestBody @Valid CodeVO codeVO);
 
+    @PostMapping("getEmailToken")
+    Result getEmailToken(@RequestBody @Valid TokenVO tokenVO);
 }
