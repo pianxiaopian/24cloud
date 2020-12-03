@@ -1,8 +1,10 @@
 package com.twenty.four.oss.manager;
 
 import com.twenty.four.common.core.result.Result;
+import com.twenty.four.common.core.utils.RandomUtil;
 import com.twenty.four.common.redis.service.RedisService;
 import com.twenty.four.oss.model.vo.CodeVO;
+import com.twenty.four.oss.model.vo.TokenVO;
 import com.twenty.four.oss.strategys.RegisterStrategy;
 import com.twenty.four.oss.util.SpringUtils;
 import java.util.concurrent.TimeUnit;
@@ -50,5 +52,17 @@ public class CacheManager {
             return Result.fail("验证码类型有误");
         }
         return Result.ok(code);
+    }
+
+    public Result getEmailToken(TokenVO tokenVO) {
+        // 生成6位随机数字令牌
+        String emailToken = RandomUtil.generateEmailToken(6);
+
+        // 将生成的令牌放入redis中
+        redisServiceUtils.setCacheObject(tokenVO.getEmail(), emailToken, 10L, TimeUnit.MINUTES);
+
+        // 发送令牌到指定邮箱
+        // TODO
+        return Result.ok(emailToken);
     }
 }

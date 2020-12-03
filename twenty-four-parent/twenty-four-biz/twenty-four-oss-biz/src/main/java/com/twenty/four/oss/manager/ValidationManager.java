@@ -56,6 +56,14 @@ public class ValidationManager {
             if(!EmailValidateUtil.validateEmail(userRegisterVO.getEmail())){
                 return Result.fail("电子邮箱有误");
             }
+            //判断验证码请求参数是否为空
+            if(StringUtils.isBlank(userRegisterVO.getCode())){
+                return Result.fail("请输入验证码");
+            }
+            String emailToken = redisServiceUtils.getCacheObject(userRegisterVO.getEmail());
+            if(!userRegisterVO.getCode().equals(emailToken)){
+                return Result.fail("令牌输入错误");
+            }
         }else{
             if(userRegisterVO.getEmail() != null){
                 //判断电子邮箱是否有效
@@ -79,6 +87,17 @@ public class ValidationManager {
         //判单手机号是否有效
         if(!MobileValidateUtil.mobileValidate(mobile)){
             return Result.fail("手机号无效");
+        }
+        return Result.ok();
+    }
+
+    /**
+     * 邮箱验证
+     */
+    public Result validationEmail(String email) {
+        // 判断邮箱是否有效
+        if (!EmailValidateUtil.validateEmail(email)) {
+            return Result.fail("邮箱地址无效");
         }
         return Result.ok();
     }

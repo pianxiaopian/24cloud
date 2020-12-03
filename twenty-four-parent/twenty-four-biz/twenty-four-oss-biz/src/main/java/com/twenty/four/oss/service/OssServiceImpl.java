@@ -13,6 +13,7 @@ import com.twenty.four.oss.manager.ValidationManager;
 import com.twenty.four.oss.mapper.OssMapper;
 import com.twenty.four.oss.mapper.StrategyMapper;
 import com.twenty.four.oss.model.vo.CodeVO;
+import com.twenty.four.oss.model.vo.TokenVO;
 import com.twenty.four.oss.model.vo.UserRegisterVO;
 import com.twenty.four.oss.strategys.RegisterStrategy;
 import javax.validation.Valid;
@@ -71,5 +72,15 @@ public class OssServiceImpl extends ServiceImpl<OssMapper, UserInfoDO> implement
         }
         Result codeResult = cacheManager.getCode(codeVO);
         return codeResult;
+    }
+
+    @Override
+    public Result getEmailToken(TokenVO tokenVO) {
+        Result emailResult = validationManager.validationEmail(tokenVO.getEmail());
+        if (emailResult.getCode() == Constants.FAIL) {
+            return emailResult;
+        }
+
+        return cacheManager.getEmailToken(tokenVO);
     }
 }
