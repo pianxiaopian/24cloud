@@ -1,12 +1,12 @@
 server:
-  port: 30001
+  port: 7070
 spring:
   profiles:
     active: local
   main:
     allow-bean-definition-overriding: true
   application:
-    name: twenty-four-demo
+    name: twenty-four-auth
   cloud:
     nacos:
       discovery:
@@ -18,17 +18,6 @@ spring:
         group: TWENTY_GROUP
         ###类型
         file-extension: yaml
-#开启acutor端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      #打开端点详情
-      show-details: always
-rocketmq:
-  name-server: localhost:9876
-  producer:
-    group: demo_producer
+
+
+

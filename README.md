@@ -16,6 +16,7 @@ A. 项目采用SpringBoot2.x+SpringCloud2.x+SpringCloudAlibaba2.x构建微服务
 9.使用nginx 实现反向代理
 10.使用 lvs+keepalived+nginx实现nginx高可用
 11.使用mysql 做数据存储
+12.使用RocketMq 做消息队列
 
 
 B. 分布式基础设施环境构建
@@ -55,7 +56,8 @@ C.项目运营与部署环境
 
 twenty-four-parent-----公共Pranet接口
 -----twenty-four-basics----分布式基础设施
----------twenty-four-basics-gateway—统一请求入口 80
+---------twenty-four-basics-admin—监控服务 （port：30101）
+---------twenty-four-basics-gateway—统一请求入口 （port：38090）
 --------- twenty-four-basics-xuxueli-xxljob—分布式任务调度平台
 --------- twenty-four-basics-seata—分布式事务解决框架
 --------- twenty-four-basics-zipkin  —分布式调用链系统
@@ -63,13 +65,15 @@ twenty-four-parent-----公共Pranet接口
 
 ----- twenty-four-api提供公共接口
 ------------ twenty-four-demo-api demo模块
+------------ twenty-four-oss-api 用户模块（主要功能:注册/修改个人信息/密码找回等）
 服务接口中包含内存内容: 实体类层、接口层 
 
 -----twenty-four-biz公共接口的实现
 ------------ twenty-four-demo-biz demo服务接口实现
+------------ twenty-four-oss-biz 用户模块接口实现（port：30001）
 -----twenty-four-common 工具类
----------twenty-four-common-core—核心工具类
----------twenty-four-common-redis—redis工具类
+---------twenty-four-common-core—核心工具类(rest返回风格设定/公共util)
+---------twenty-four-common-redis—redis工具类(redis crud工具)
 
 -----twenty-four-portal 门户平台
 --------twenty-four-portal-web 门户网站 

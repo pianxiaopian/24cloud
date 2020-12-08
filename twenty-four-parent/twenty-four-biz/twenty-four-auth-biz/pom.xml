@@ -3,28 +3,30 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>twenty-four-common</artifactId>
+    <artifactId>twenty-four-biz</artifactId>
     <groupId>com.twenty.four</groupId>
     <version>1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>twenty-four-common-core</artifactId>
+  <artifactId>twenty-four-auth-biz</artifactId>
+
   <dependencies>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.twenty.four</groupId>
-      <artifactId>twenty-four-common-redis</artifactId>
+      <artifactId>twenty-four-auth-api</artifactId>
       <version>${twenty.four.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
+      <groupId>com.twenty.four</groupId>
+      <artifactId>twenty-four-common-core</artifactId>
+      <version>${twenty.four.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.twenty.four</groupId>
+      <artifactId>twenty-four-oss-api</artifactId>
+      <version>${twenty.four.version}</version>
     </dependency>
   </dependencies>
-
 
 </project>

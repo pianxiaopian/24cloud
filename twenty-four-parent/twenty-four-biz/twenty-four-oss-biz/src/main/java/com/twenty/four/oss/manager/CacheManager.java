@@ -67,6 +67,11 @@ public class CacheManager {
             //验证码用于登录
             //将获取到的验证码放入redis中
             redisServiceUtils.setCacheObject(codeVO.getMobile(),String.valueOf(code),10L, TimeUnit.MINUTES);
+        }else if(codeVO.getCodeType() == SwingConstants.BOTTOM){
+            //验证码用于关联用户
+            //将获取到的验证码放入redis中
+            redisServiceUtils.setCacheObject(codeVO.getMobile(),String.valueOf(code),10L, TimeUnit.MINUTES);
+
         }else{
             return Result.fail("验证码类型有误");
         }

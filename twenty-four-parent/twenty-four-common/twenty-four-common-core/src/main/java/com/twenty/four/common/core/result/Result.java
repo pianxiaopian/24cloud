@@ -39,6 +39,10 @@ public class Result<T> implements Serializable
         return restResult(data, SUCCESS, msg);
     }
 
+
+
+
+
     public static <T> Result<T> fail()
     {
         return restResult(null, FAIL, null);
@@ -65,9 +69,17 @@ public class Result<T> implements Serializable
     }
 
     public static <T> Result<T> fail(ResultCode resultCode)
+
     {
         return restResult(null,resultCode.code(),resultCode.message());
     }
+
+    public static <T> Result<T> fail_result(ResultCode resultCode,T data)
+
+    {
+        return restResult(data,resultCode.code(),resultCode.message());
+    }
+
 
     private static <T> Result<T> restResult(T data, int code, String msg)
     {

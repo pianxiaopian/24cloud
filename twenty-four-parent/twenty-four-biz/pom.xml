@@ -14,6 +14,7 @@
   <modules>
     <module>twenty-four-demo-biz</module>
     <module>twenty-four-oss-biz</module>
+    <module>twenty-four-auth-biz</module>
   </modules>
 
   <dependencies>
