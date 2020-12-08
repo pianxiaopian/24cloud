@@ -74,12 +74,6 @@ public class UserInfoDO {
     @TableField(value = "register_type")
     private String registerType;
 
-    /**
-     * 联合登录id
-     */
-    @ApiModelProperty(value = "联合登录id")
-    @TableField(value = "union_login_id")
-    private String unionLoginId;
 
     /**
      * 注册时间
@@ -102,6 +96,22 @@ public class UserInfoDO {
     @ApiModelProperty(value = "手机号")
     @TableField(value = "mobile")
     private String mobile;
+
+    /**
+     * qq_open_id
+     */
+    @ApiModelProperty(value = "qq_open_id")
+    @TableField(value = "qq_union_id")
+    private String qqUnionId;
+
+
+    /**
+     * wechat_open_id
+     */
+    @ApiModelProperty(value = "wechat_open_id")
+    @TableField(value = "wx_union_id")
+    private String wxUnionId;
+
 
 
 }

@@ -5,17 +5,24 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.twenty.four.common.core.constant.Constants;
 import com.twenty.four.common.core.enums.ResultCode;
 import com.twenty.four.common.core.result.Result;
+import com.twenty.four.common.redis.service.RedisService;
 import com.twenty.four.oss.api.OssService;
 import com.twenty.four.oss.domain.StrategyDO;
 import com.twenty.four.oss.domain.UserInfoDO;
 import com.twenty.four.oss.manager.CacheManager;
+import com.twenty.four.oss.manager.UnionUserManager;
 import com.twenty.four.oss.manager.ValidationManager;
 import com.twenty.four.oss.mapper.OssMapper;
 import com.twenty.four.oss.mapper.StrategyMapper;
+import com.twenty.four.oss.model.dto.UserInfoDTO;
 import com.twenty.four.oss.model.vo.CodeVO;
+import com.twenty.four.oss.model.vo.UnionUserVO;
 import com.twenty.four.oss.model.vo.UserRegisterVO;
 import com.twenty.four.oss.strategys.RegisterStrategy;
+import javax.swing.SwingConstants;
 import javax.validation.Valid;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +40,10 @@ public class OssServiceImpl extends ServiceImpl<OssMapper, UserInfoDO> implement
     private ValidationManager validationManager;
     @Autowired
     private CacheManager cacheManager;
+    @Autowired
+    private RedisService redisService;
+    @Autowired
+    private UnionUserManager unionUserManager;
 
     @Override
     public Result register(@Valid UserRegisterVO registerVO) throws Exception{
@@ -71,5 +82,41 @@ public class OssServiceImpl extends ServiceImpl<OssMapper, UserInfoDO> implement
         }
         Result codeResult = cacheManager.getCode(codeVO);
         return codeResult;
+    }
+
+    @Override
+    public Result getUserInfo(String openId,String columnName) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq(columnName,openId);
+        queryWrapper.eq("delete_flag", SwingConstants.CENTER);
+        queryWrapper.eq("state", SwingConstants.CENTER);
+        UserInfoDO userInfoDO = null;
+        try{
+            userInfoDO = baseMapper.selectOne(queryWrapper);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error(e+"");
+            return Result.fail("系统错误");
+        }
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        if(userInfoDO == null){
+            String openIdRedis = redisService.getCacheObject(columnName);
+            if(StringUtils.isBlank(openIdRedis)){
+                return Result.fail("信息已超时,请重试");
+            }
+            return Result.fail_result(ResultCode.NOT_UNION_QUERIED,openIdRedis);
+        }
+        BeanUtils.copyProperties(userInfoDO,userInfoDTO);
+        return Result.ok(userInfoDTO,"登录成功");
+    }
+
+    @Override
+    public Result unionUser(@Valid UnionUserVO unionUserVO) {
+        Result mobileResult = validationManager.validationMobile(unionUserVO.getMobile());
+        if(mobileResult.getCode() == Constants.FAIL){
+            return mobileResult;
+        }
+        Result result = unionUserManager.unionUserMethod(unionUserVO);
+        return result;
     }
 }

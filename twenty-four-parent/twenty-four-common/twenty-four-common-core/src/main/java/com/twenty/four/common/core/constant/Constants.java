@@ -32,6 +32,13 @@ public class Constants
      */
     public static final Integer SUCCESS = 200;
 
+
+    /**
+     * 成功标记
+     */
+    public static final Integer QUERIED = 202;
+
+
     /**
      * 失败标记
      */

@@ -10,6 +10,7 @@ public enum ResultCode {
     SUCCESS(200,"成功"),
     FAILURE(201,"失败"),
     NOT_QUERIED(202,"未查询到数据"),
+    NOT_UNION_QUERIED(203,"当前尚未用户,请先关联用户账号进行登录"),
 
     NO_PERMISSION(403,"没有权限"),
     NO_AUTH(401,"未登录"),
