@@ -53,11 +53,11 @@ public class UnionUserManager {
                 return Result.fail(ResultCode.NOT_QUERIED);
             }
             String openId = redisServiceUtils.getCacheObject(unionUserVO.getUnionToken());
-            UserInfoDO updateData = new UserInfoDO();
-            updateData.setQqUnionId(openId);
             if(StringUtils.isBlank(openId)){
                 return Result.fail("信息已超时,请重试");
             }
+            UserInfoDO updateData = new UserInfoDO();
+            updateData.setQqUnionId(openId);
             QueryWrapper updateWrapper = new QueryWrapper();
             updateWrapper.eq("uuid",userInfoDO.getUuid());
             int update = ossMapper.update(updateData, updateWrapper);
