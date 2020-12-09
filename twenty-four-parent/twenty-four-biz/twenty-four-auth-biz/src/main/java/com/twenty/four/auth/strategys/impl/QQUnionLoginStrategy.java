@@ -11,6 +11,7 @@ import com.twenty.four.common.core.utils.ParamToOtherUtils;
 import com.twenty.four.common.core.utils.TokenUtils;
 import com.twenty.four.oss.api.OssService;
 import com.twenty.four.oss.model.dto.UserInfoDTO;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -95,6 +96,24 @@ public class QQUnionLoginStrategy implements UnionLoginStrategy {
         requestEntity.add("openId", openId);
         Result result = restTemplate.postForObject(ossUrl, requestEntity, Result.class);
         return result;
+    }
+
+    @Override
+    public Result unionLoginCallback(UnionLoginDo unionLoginDo) {
+        //先判断redis中是否有授权链接的缓存信息
+        String qq_request_address = tokenUtils.getTokenValue("qq_request_address");
+        if(StringUtils.isBlank(qq_request_address)){
+            //不存在则生成链接
+            String requestAddress = unionLoginDo.getRequestAddress();
+            UUID uuid = UUID.randomUUID();
+            String str = uuid.toString();
+            // 去掉"-"符号
+            String strUuid = str.replace("-", "");
+            //生成链接后缓存到redis中
+            tokenUtils.setKey("qq_request_address",requestAddress+strUuid,10L,TimeUnit.MINUTES);
+            return Result.ok(requestAddress+strUuid,"获取授权链接成功");
+        }
+        return Result.ok(qq_request_address,"获取授权链接成功");
     }
 
 }

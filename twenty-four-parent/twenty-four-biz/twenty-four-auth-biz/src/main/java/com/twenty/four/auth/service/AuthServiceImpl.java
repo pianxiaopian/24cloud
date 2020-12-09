@@ -11,6 +11,7 @@ import com.twenty.four.auth.util.SpringUtils;
 import com.twenty.four.common.core.result.Result;
 import com.twenty.four.common.core.utils.TokenUtils;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.SwingConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +27,35 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RestController
 public class AuthServiceImpl extends ServiceImpl<AuthMapper, UnionLoginDo> implements AuthService {
 
-    @Autowired
-    private TokenUtils tokenUtils;
 
+    @Override
+    public Result<JSONObject> createAddress(String unionPublicId) {
+        if (StringUtils.isEmpty(unionPublicId)) {
+            return Result.fail("unionPublicId不为空");
+        }
+        //创建查询体
+        QueryWrapper<UnionLoginDo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("union_public_id",unionPublicId);
+        queryWrapper.eq("is_availability", SwingConstants.NORTH);
+        UnionLoginDo unionLoginDo = new UnionLoginDo();
+        try{
+            unionLoginDo = baseMapper.selectOne(queryWrapper);
+        }catch (Exception e){
+            return Result.fail("查询渠道失败");
+        }
+        if (unionLoginDo == null) {
+            return Result.fail("渠道已经关闭或者该渠道不存在");
+        }
+        // 从Spring容器中
+        String unionBeanId = unionLoginDo.getUnionBeanId();
+        if (StringUtils.isEmpty(unionBeanId)) {
+            return Result.fail("bean参数配置错误");
+        }
+        UnionLoginStrategy unionLoginStrategy =
+            SpringUtils.getBean(unionBeanId, UnionLoginStrategy.class);
+        Result result = unionLoginStrategy.unionLoginCallback(unionLoginDo);
+        return result;
+    }
 
     @Override
     public Result<JSONObject> unionLoginCallBack(String unionPublicId) {
@@ -38,6 +65,7 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, UnionLoginDo> imple
         //创建查询体
         QueryWrapper<UnionLoginDo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("union_public_id",unionPublicId);
+        queryWrapper.eq("is_availability", SwingConstants.NORTH);
         UnionLoginDo unionLoginDo = new UnionLoginDo();
         try{
             unionLoginDo = baseMapper.selectOne(queryWrapper);

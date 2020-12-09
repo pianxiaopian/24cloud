@@ -17,6 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 public interface AuthService {
 
     /**
+     * 联合登录 生成授权链接
+     * @param unionPublicId
+     * @return
+     */
+    @GetMapping("/createAddress")
+    Result<JSONObject> createAddress(@RequestParam("unionPublicId") String unionPublicId);
+
+    /**
      * 联合登录回调方法 用户选择授权，生成授权链接
      * @param unionPublicId
      * @return

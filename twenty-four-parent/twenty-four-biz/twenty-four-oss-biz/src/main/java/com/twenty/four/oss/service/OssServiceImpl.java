@@ -118,6 +118,8 @@ public class OssServiceImpl extends ServiceImpl<OssMapper, UserInfoDO> implement
             return Result.fail_result(ResultCode.NOT_UNION_QUERIED,openIdRedis);
         }
         BeanUtils.copyProperties(userInfoDO,userInfoDTO);
+        //登录成功后 删除之前存在redis中的授权连接
+        redisService.deleteObject("qq_request_address");
         return Result.ok(userInfoDTO,"登录成功");
     }
 

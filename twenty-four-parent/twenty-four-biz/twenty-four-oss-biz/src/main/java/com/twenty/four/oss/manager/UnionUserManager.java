@@ -65,7 +65,10 @@ public class UnionUserManager {
                 //更新成功
                 UserInfoDTO userInfoDTO = new UserInfoDTO();
                 BeanUtils.copyProperties(userInfoDO,userInfoDTO);
+                //清除验证码
                 redisServiceUtils.deleteObject(unionUserVO.getMobile());
+                //关联成功后 删除之前存在redis中的授权连接
+                redisServiceUtils.deleteObject("qq_request_address");
                 return Result.ok(userInfoDTO,"关联成功");
             }else{
                 return Result.fail("系统错误");
