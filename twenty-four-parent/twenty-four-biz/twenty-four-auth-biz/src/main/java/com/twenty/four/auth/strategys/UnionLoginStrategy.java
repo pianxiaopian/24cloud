@@ -10,5 +10,8 @@ import javax.servlet.http.HttpServletRequest;
  * @create: 2020/12/4 15:58
  */
 public interface UnionLoginStrategy {
+
     Result unionLoginCallback(HttpServletRequest request, UnionLoginDo unionLoginDo);
+
+    Result unionLoginCallback(UnionLoginDo unionLoginDo);
 }

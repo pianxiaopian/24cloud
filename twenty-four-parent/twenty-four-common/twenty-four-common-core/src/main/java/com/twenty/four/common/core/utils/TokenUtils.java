@@ -29,6 +29,10 @@ public class TokenUtils {
         redisService.setCacheObject(key, value, timeOut,timeUnit);
     }
 
+    public void setKey(String key ,String value, Long timeOut, TimeUnit timeUnit) {
+        redisService.setCacheObject(key, value, timeOut,timeUnit);
+    }
+
     /**
      * 前缀
      *
